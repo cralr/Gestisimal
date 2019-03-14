@@ -1,6 +1,9 @@
 package gestisimal.almacen;
 
+import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
 import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
+import gestisimal.almacen.exceptions.StockNegativoExceptions;
+import gestisimal.almacen.exceptions.StockNegativoExceptions;
 
 /**
  * <p>
@@ -44,7 +47,7 @@ public class Articulo {
    */
   private int codigo;
   
-   Articulo (String descripcion, double precioCompra, double precioVenta, int stock) {
+   Articulo (String descripcion, double precioCompra, double precioVenta, int stock) throws StockNegativoExceptions {
     setDescripcion(descripcion);
     setPrecioCompra(precioCompra);
     setPrecioVenta(precioVenta);
@@ -119,26 +122,40 @@ public class Articulo {
 
   /**
    * @param stock the stock to set
+   * @throws StockNegativoExceptions 
    */
-   void setStock(int stock) {
-    this.stock = stock;
+   void setStock(int stock) throws StockNegativoExceptions {
+    if(stock >=0) {
+      this.stock = stock;
+    }else
+      throw new StockNegativoExceptions("El stock no puede ser negativo.");   
   }  
   
   /**
    * Método para aumentar el stock
    * @param cantidad
+   * @throws StockNegativoExceptions 
+   * @throws CantidadNegativaExceptions 
   */
-  public void incrementaStock(int cantidad){
-    setStock(getStock()+cantidad);
-    }
+  public void incrementaStock(int cantidad) throws StockNegativoExceptions, CantidadNegativaExceptions{
+    if(cantidad>0)
+      setStock(getStock()+cantidad);
+    else
+    throw new CantidadNegativaExceptions("No se puede añadir una cantidad de stock negativo.");
+  }
   
   /**
    * Método para aumentar el stock
    * @param cantidad
+   * @throws CantidadNegativaExceptions 
+   * @throws StockNegativoExceptions 
   */
-  public void decrementaStock(int cantidad){
-    setStock(getStock()-cantidad);
-    }
+  public void decrementaStock(int cantidad) throws CantidadNegativaExceptions, StockNegativoExceptions{
+    if(cantidad>0)
+      setStock(getStock()-cantidad);
+    else
+      throw new CantidadNegativaExceptions("No se puede añadir una cantidad de stock negativo.");
+   }
   
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
@@ -182,7 +199,15 @@ public class Articulo {
         "\n'''''''''''''''''''''''''''''''''''''''";
   }
 
-  public void set(String descripcion, double precioCompra, double precioVenta, int stock) {
+  /**
+   * Método set usado en Almacen para realizar la modificación.
+   * @param descripcion
+   * @param precioCompra
+   * @param precioVenta
+   * @param stock
+   * @throws StockNegativoExceptions 
+   */
+  public void set(String descripcion, double precioCompra, double precioVenta, int stock) throws StockNegativoExceptions {
     setDescripcion(descripcion);
     setPrecioCompra(precioCompra);
     setPrecioVenta(precioVenta);

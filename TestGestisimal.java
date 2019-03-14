@@ -6,7 +6,9 @@ import java.util.Scanner;
 import gestisimal.almacen.Almacen;
 import gestisimal.almacen.Articulo;
 import gestisimal.almacen.exceptions.ArticuloNoExisteException;
+import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
 import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
+import gestisimal.almacen.exceptions.StockNegativoExceptions;
 
 /**
  * Se comunica con el usuario (E/S de datos por consola)
@@ -37,20 +39,20 @@ public class TestGestisimal {
            System.out.println(almacen.toString());
           break;
         case 2:
-            annadirArticulo();
+            annadir();
           break;
         case 3:
             baja();
           break;
           
         case 4:
-           modificarArticulo();
+           modificar();
           break;
         case 5:
           entradaAlmacen();
         break;
         case 6:
-          
+          salidaAlmacen();
           break;
         default:
           System.out.println("Fin del Programa");
@@ -76,7 +78,7 @@ public class TestGestisimal {
    * @throws Exception
    */
 
-  private static void annadirArticulo() throws Exception {
+  private static void annadir() throws Exception {
    
     try { 
       System.out.println("--AÑADIR ARTÍCULO--");
@@ -89,10 +91,12 @@ public class TestGestisimal {
       System.out.println("Introduzca el stock del artículo:");
       int stock=entrada.nextInt();
       
+      
       almacen.annadir(descripcion, precioCompra, precioVenta, stock);
       System.out.println("Artículo añadido.");
     } catch (Exception e) {
       System.err.println("No se ha podido dar de alta al artículo. " + e.getMessage());
+      entrada.nextLine();
     }
   }
   
@@ -109,7 +113,7 @@ public class TestGestisimal {
       entrada.nextLine();    
   }
   
-  private static void modificarArticulo()  {
+  private static void modificar() throws StockNegativoExceptions  {
     
       try {
         System.out.println("--MODIFICAR ARTÍCULO--");
@@ -130,27 +134,57 @@ public class TestGestisimal {
         
         almacen.set(articulo,descripcion, precioCompra, precioVenta, stock);
       } catch (ArticuloNoExisteException e) {
-        // TODO Auto-generated catch block
         System.err.println("No se ha podido modificar el artículo."+e.getMessage());
       }
     
   }
   
-  public static void entradaAlmacen() {
+  /**
+   * Método para aumentar el stock de un artículo.
+   * @throws StockNegativoExceptions
+   * @throws CantidadNegativaExceptions
+   */
+  private static void entradaAlmacen() throws StockNegativoExceptions, CantidadNegativaExceptions {
     try {
       System.out.println("--INCREMENTAR STOCK--");
-      System.out.println("Introduce el codigo del articulo a incrementar.");
+      System.out.println("Introduce el codigo del articulo para incrementar su stock.");
       int codigo=entrada.nextInt();
       Articulo articulo = almacen.get(codigo);
       System.out.println(articulo);
 
+
       System.out.println("Introduzca el número de artículos entregados al almacen.");
       int cantidad=entrada.nextInt();
       almacen.incrementar(codigo,cantidad);
-      
+
     } catch (ArticuloNoExisteException e) {
       System.err.println("No se ha podido incrementar el stock del artículo."+e.getMessage());
     }
+    
+  }
+  
+  /**
+   * Método para disminuir el stock de un artículo, este no puede ser negativo.
+   * @throws StockNegativoExceptions
+   * @throws CantidadNegativaExceptions
+   */
+  private static void salidaAlmacen() throws StockNegativoExceptions, CantidadNegativaExceptions {
+    try {
+      System.out.println("--DECREMENTAR STOCK--");
+      System.out.println("Introduce el codigo del articulo para decrementar su stock.");
+      int codigo=entrada.nextInt();
+      Articulo articulo = almacen.get(codigo);
+      System.out.println(articulo);
+
+
+      System.out.println("Introduzca el número de artículos eliminados del almacen.");
+      int cantidad=entrada.nextInt();
+      almacen.decrementar(codigo, cantidad);
+
+    } catch (ArticuloNoExisteException e) {
+      System.err.println("No se ha podido incrementar el stock del artículo."+e.getMessage());
+    }
+    
   }
   
    /**

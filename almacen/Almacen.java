@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import gestisimal.almacen.exceptions.ArticuloNoExisteException;
 import gestisimal.almacen.exceptions.ArticuloYaExisteException;
+import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
 import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
+import gestisimal.almacen.exceptions.StockNegativoExceptions;
 
 /**
  * Gestiona el conjunto de artículos del almacén.
@@ -51,9 +53,10 @@ public class Almacen {
    * @param precioCompra
    * @param precioVenta
    * @param stock
+   * @throws StockNegativoExceptions 
    */
 
-  public void set(Articulo articulo, String descripcion, double precioCompra, double precioVenta, int stock) {
+  public void set(Articulo articulo, String descripcion, double precioCompra, double precioVenta, int stock) throws StockNegativoExceptions {
     int indice = almacen.indexOf(articulo);
     articulo.set( descripcion,  precioCompra,  precioVenta,  stock);
     almacen.set(indice, almacen.get(indice));
@@ -62,12 +65,20 @@ public class Almacen {
  
 
   
-  
+  /**
+   * Método toString
+   */
   @Override
   public String toString() {
     return "Artículo " + almacen + "" ;
   }
 
+  /**
+   * Método get para obtener el codigo del artículo.
+   * @param codigo
+   * @return
+   * @throws ArticuloNoExisteException
+   */
   public Articulo get(int codigo) throws ArticuloNoExisteException {
     try {
       return almacen.get(almacen.indexOf(new Articulo(codigo)));
@@ -76,8 +87,41 @@ public class Almacen {
     }
   }
 
-  public void incrementar(int codigo, int cantidad) {
+  /**
+   * Método incrementar, que aumenta las unidades de stock de un artículo.
+   * @param codigo
+   * @param cantidad
+   * @throws CantidadNegativaExceptions 
+   * @throws StockNegativoExceptions 
+   */
+  public void incrementar(int codigo, int cantidad) throws StockNegativoExceptions, CantidadNegativaExceptions {
     Articulo articulo = almacen.get(almacen.indexOf(new Articulo(codigo)));
-    articulo.incrementaStock(cantidad);
+    try {
+      articulo.incrementaStock(cantidad);
+    }
+      catch(CantidadNegativaExceptions e) {
+        System.err.println("No se ha podido incrementar el stock del artículo."+e.getMessage());
+      }
+  }
+  
+  /**
+   * Método decrementar, que disminuye las unidades de stock de un artículo.
+   * @param codigo
+   * @param cantidad
+   * @throws CantidadNegativaExceptions 
+   * @throws StockNegativoExceptions 
+   */
+  public void decrementar(int codigo, int cantidad) throws StockNegativoExceptions, CantidadNegativaExceptions {
+    Articulo articulo = almacen.get(almacen.indexOf(new Articulo(codigo)));
+    try {
+      articulo.decrementaStock(cantidad);
+    }
+    catch(CantidadNegativaExceptions e) {
+      System.err.println("No se ha podido decrementar el stock del artículo."+e.getMessage());
+    }
+    catch(StockNegativoExceptions e){
+      System.err.println("No se ha podido decrementar el stock del artículo."+e.getMessage());
+    }
   }
 }
+
