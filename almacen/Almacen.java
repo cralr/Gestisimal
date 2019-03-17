@@ -7,6 +7,8 @@ import gestisimal.almacen.exceptions.ArticuloYaExisteException;
 import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
 import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
 import gestisimal.almacen.exceptions.StockNegativoExceptions;
+import gestisimal.almacen.exceptions.precioCompraNegativoExceptions;
+import gestisimal.almacen.exceptions.precioVentaNegativoExceptions;
 
 /**
  * Gestiona el conjunto de artículos del almacén.
@@ -43,7 +45,7 @@ public class Almacen {
    * @return true si se ha eliminado. false en otro caso.
    */
   public boolean baja(int codigo) throws CodigoNoValidoExceptions{
-    return almacen.remove(new Articulo(codigo));
+    return almacen.remove(new Articulo(codigo)); //Si el código que introducimos en el test es igual al código del artículo que hay en la lista se realiza el borrado.
   }
   
   /**
@@ -54,9 +56,11 @@ public class Almacen {
    * @param precioVenta
    * @param stock
    * @throws StockNegativoExceptions 
+   * @throws precioVentaNegativoExceptions 
+   * @throws precioCompraNegativoExceptions 
    */
 
-  public void set(Articulo articulo, String descripcion, double precioCompra, double precioVenta, int stock) throws StockNegativoExceptions {
+  public void set(Articulo articulo, String descripcion, double precioCompra, double precioVenta, int stock) throws StockNegativoExceptions, precioCompraNegativoExceptions, precioVentaNegativoExceptions {
     int indice = almacen.indexOf(articulo);
     articulo.set( descripcion,  precioCompra,  precioVenta,  stock);
     almacen.set(indice, almacen.get(indice));
@@ -81,9 +85,9 @@ public class Almacen {
    */
   public Articulo get(int codigo) throws ArticuloNoExisteException {
     try {
-      return almacen.get(almacen.indexOf(new Articulo(codigo)));
+      return almacen.get(almacen.indexOf(new Articulo(codigo))); //Con get lo que se hace es extraer el código del artículo.
     } catch (IndexOutOfBoundsException e) {
-     throw new ArticuloNoExisteException("El código del artículo no existe en el almacén.");
+     throw new ArticuloNoExisteException("El código del artículo no existe en el almacén.");//Si el código no lo devuelve el indexOf es que no existe y salta la excepción.
     }
   }
 

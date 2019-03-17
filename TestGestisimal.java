@@ -9,6 +9,8 @@ import gestisimal.almacen.exceptions.ArticuloNoExisteException;
 import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
 import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
 import gestisimal.almacen.exceptions.StockNegativoExceptions;
+import gestisimal.almacen.exceptions.precioCompraNegativoExceptions;
+import gestisimal.almacen.exceptions.precioVentaNegativoExceptions;
 
 /**
  * Se comunica con el usuario (E/S de datos por consola)
@@ -74,7 +76,7 @@ public class TestGestisimal {
   }*/
 
   /**
-   * Método añadir.
+   * Método añadir en el que se le pedirá al usuario los datos del artículo.
    * @throws Exception
    */
 
@@ -92,14 +94,18 @@ public class TestGestisimal {
       int stock=entrada.nextInt();
       
       
-      almacen.annadir(descripcion, precioCompra, precioVenta, stock);
+      almacen.annadir(descripcion, precioCompra, precioVenta, stock); //Con almacen.annadir usamos el metodo creado en Almacen.
       System.out.println("Artículo añadido.");
     } catch (Exception e) {
-      System.err.println("No se ha podido dar de alta al artículo. " + e.getMessage());
+      System.err.println("No se ha podido dar de alta al artículo. " + e.getMessage());//Si hay un error salta la excepción.
       entrada.nextLine();
     }
   }
   
+  /**
+   * Método para dar de baja un artículo de la lista.
+   * @throws CodigoNoValidoExceptions
+   */
   private static void baja() throws CodigoNoValidoExceptions {
       System.out.println("Introduce el códido del artículo a eliminar.");
       int codigo=entrada.nextInt();
@@ -113,7 +119,13 @@ public class TestGestisimal {
       entrada.nextLine();    
   }
   
-  private static void modificar() throws StockNegativoExceptions  {
+  /**
+   * Método para modificar los atributos de un artículo.
+   * @throws StockNegativoExceptions
+   * @throws precioCompraNegativoExceptions
+   * @throws precioVentaNegativoExceptions
+   */
+  private static void modificar() throws StockNegativoExceptions, precioCompraNegativoExceptions, precioVentaNegativoExceptions  {
     
       try {
         System.out.println("--MODIFICAR ARTÍCULO--");
