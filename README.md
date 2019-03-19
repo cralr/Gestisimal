@@ -3,5 +3,5 @@
 Trabajo por parejas del programa Gestisimal.
 
 Realizado por:
-Fco Javier FrÌas Serrano
-Rafael Miguel Cruz ¡lvarez
+- Fco Javier Fr√≠as Serrano
+- Rafael Miguel Cruz √Ålvarez
