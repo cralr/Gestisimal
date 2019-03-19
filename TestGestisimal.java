@@ -32,7 +32,7 @@ public class TestGestisimal {
 
     int opcion;
 
-    // almacenDePrueba();
+    //almacenDePrueba();
     do {
       mostrarMenu();
       opcion = pedirOpcion();
@@ -63,19 +63,18 @@ public class TestGestisimal {
     } while (opcion != 7);
   }
 
- /*
-  private static void almacenDePrueba() {
-    try {
-      almacen.annadir("1", 11, 11, 11);
-      almacen.annadir("2", 22, 22, 22);
-      almacen.annadir("33", 11, 11, 33);
-      almacen.annadir("44", 11, 11, 44);
-      almacen.annadir("55", 11, 11, 55);
-    } catch (Exception e) {
-      System.out.println("ESTO NO DEBE APARECERRRRRRRRRRRRRRRRR");
-    }
-
-  }*/
+ 
+//  private static void almacenDePrueba() {
+//    try {
+//      almacen.annadir("1", 11, 11, 11);
+//      almacen.annadir("1", 22, 22, 22);
+//      almacen.annadir("33", 11, 11, 33);
+//      almacen.annadir("44", 11, 11, 44);
+//      almacen.annadir("55", 11, 11, 55);
+//    } catch (Exception e) {
+//      System.out.println("ESTO NO DEBE APARECERRRRRRRRRRRRRRRRR");
+//    }
+//  }
  
 
   /**
@@ -175,8 +174,8 @@ public class TestGestisimal {
       System.out.println("Introduzca el número de artículos entregados al almacen.");
       int cantidad = entrada.nextInt();
       almacen.incrementar(codigo, cantidad);
-    } catch (ArticuloNoExisteException | CantidadNegativaExceptions e) {
-      System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage());
+    } catch (Exception e) {
+      System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage()+"\n");
     }
   }
 
@@ -186,7 +185,7 @@ public class TestGestisimal {
    * @throws StockNegativoExceptions
    * @throws CantidadNegativaExceptions
    */
-  private static void salidaAlmacen() throws StockNegativoExceptions, CantidadNegativaExceptions {
+  private static void salidaAlmacen() {
     try {
       System.out.println("--DECREMENTAR STOCK--");
       System.out.println("Introduce el codigo del articulo para decrementar su stock.");
@@ -197,8 +196,8 @@ public class TestGestisimal {
       System.out.println("Introduzca el número de artículos eliminados del almacen.");
       int cantidad = entrada.nextInt();
       almacen.decrementar(codigo, cantidad);
-    } catch (ArticuloNoExisteException | CantidadNegativaExceptions e) {
-      System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage());
+    } catch (Exception e) {
+      System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage()+"\n");
     }
   }
 
