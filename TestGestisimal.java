@@ -1,16 +1,19 @@
 package gestisimal;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import gestisimal.almacen.Almacen;
 import gestisimal.almacen.Articulo;
 import gestisimal.almacen.exceptions.ArticuloNoExisteException;
-import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
-import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
-import gestisimal.almacen.exceptions.StockNegativoExceptions;
-import gestisimal.almacen.exceptions.precioCompraNegativoExceptions;
-import gestisimal.almacen.exceptions.precioVentaNegativoExceptions;
+import gestisimal.almacen.exceptions.CantidadNegativaException;
+import gestisimal.almacen.exceptions.CodigoNoValidoException;
+import gestisimal.almacen.exceptions.StockNegativoException;
+import gestisimal.utiles.Menu;
+import gestisimal.utiles.Teclado;
+import gestisimal.almacen.exceptions.PrecioCompraNegativoException;
+import gestisimal.almacen.exceptions.PrecioVentaNegativoException;
 
 /**
  * Se comunica con el usuario (E/S de datos por consola) Comprueba si existe o
@@ -27,6 +30,8 @@ import gestisimal.almacen.exceptions.precioVentaNegativoExceptions;
 public class TestGestisimal {
   static Almacen almacen = new Almacen();
   static Scanner entrada = new Scanner(System.in);
+  private static Menu menu = new Menu("----MENÚ GESTISIMAL----", new String[] {"Listado", "Alta", "Baja",
+      "Modificación", "Entada de mercancía","Salida de mercancía", "Salir" });
 
   public static void main(String[] args) throws Exception {
 
@@ -34,10 +39,7 @@ public class TestGestisimal {
 
     //almacenDePrueba();
     do {
-      mostrarMenu();
-      opcion = pedirOpcion();
-
-      switch ((opcion)) {
+      switch ((menu.gestionar())) {
       case 1:
         System.out.println(almacen.toString());
         break;
@@ -56,11 +58,11 @@ public class TestGestisimal {
       case 6:
         salidaAlmacen();
         break;
-      case 7:
-         salir();
-        break;
+       default:
+         System.out.println("Adios");
+         return;
       }
-    } while (opcion != 7);
+    } while (true);
   }
 
  
@@ -87,14 +89,10 @@ public class TestGestisimal {
 
     try {
       System.out.println("--AÑADIR ARTÍCULO--");
-      System.out.println("Introduzca la descripción del artículo:");
-      String descripcion = entrada.next();
-      System.out.println("Introduzca el precio de compra del artículo:");
-      double precioCompra = entrada.nextDouble();
-      System.out.println("Introduzca el precio de venta del artículo:");
-      double precioVenta = entrada.nextDouble();
-      System.out.println("Introduzca el stock del artículo:");
-      int stock = entrada.nextInt();
+      String descripcion=Teclado.leerCadena("Introduzca la descripción del artículo:");
+      double precioCompra=Teclado.leerDecimal("Introduzca el precio de compra del artículo:");
+      double precioVenta=Teclado.leerDecimal("Introduzca el precio de venta del artículo:");
+      int stock=Teclado.leerEntero("Introduzca el stock del artículo:");
 
       almacen.annadir(descripcion, precioCompra, precioVenta, stock); // Con almacen.annadir usamos el metodo creado en
                                                                       // Almacen.
@@ -109,46 +107,42 @@ public class TestGestisimal {
   /**
    * Método para dar de baja un artículo de la lista.
    * 
-   * @throws CodigoNoValidoExceptions
+   * @throws CodigoNoValidoException
+   * @throws IOException 
+   * @throws NumberFormatException 
    */
-  private static void baja() throws CodigoNoValidoExceptions {
-    System.out.println("Introduce el códido del artículo a eliminar.");
-    int codigo = entrada.nextInt();
-    entrada.nextLine();
+  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException {
+    int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
 
     if (almacen.baja(codigo))
       System.out.println("Artículo eliminado.");
     else
       System.err.println("El artículo no se ha podido eliminar. No existe un artículo con ese código en el almacen.");
-    
-    entrada.nextLine();
   }
 
   /**
    * Método para modificar los atributos de un artículo.
    * 
-   * @throws StockNegativoExceptions
-   * @throws precioCompraNegativoExceptions
-   * @throws precioVentaNegativoExceptions
+   * @throws StockNegativoException
+   * @throws PrecioCompraNegativoException
+   * @throws PrecioVentaNegativoException
+   * @throws IOException 
+   * @throws NumberFormatException 
    */
   private static void modificar()
-      throws StockNegativoExceptions, precioCompraNegativoExceptions, precioVentaNegativoExceptions {
+      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException, NumberFormatException, IOException {
 
     try {
       System.out.println("--MODIFICAR ARTÍCULO--");
-      System.out.println("Introduce el codigo del articulo a modificar.");
-      int codigo = entrada.nextInt();
+      int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
       Articulo articulo = almacen.get(codigo);
       System.out.println(articulo);
 
-      System.out.println("Introduzca la nueva descripción del artículo:");
-      String descripcion = entrada.next();
-      System.out.println("Introduzca el nuevo precio de compra del artículo:");
-      double precioCompra = entrada.nextDouble();
-      System.out.println("Introduzca el nuevo precio de venta del artículo:");
-      double precioVenta = entrada.nextDouble();
-      System.out.println("Introduzca el nuevo stock del artículo:");
-      int stock = entrada.nextInt();
+      String descripcion=Teclado.leerCadena("Introduzca la descripción del artículo:");
+      double precioCompra=Teclado.leerDecimal("Introduzca el precio de compra del artículo:");
+      double precioVenta=Teclado.leerDecimal("Introduzca el precio de venta del artículo:");
+      int stock=Teclado.leerEntero("Introduzca el stock del artículo:");
+
 
       almacen.set(articulo, descripcion, precioCompra, precioVenta, stock);
     } catch (ArticuloNoExisteException e) {
@@ -160,19 +154,17 @@ public class TestGestisimal {
   /**
    * Método para aumentar el stock de un artículo.
    * 
-   * @throws StockNegativoExceptions
-   * @throws CantidadNegativaExceptions
+   * @throws StockNegativoException
+   * @throws CantidadNegativaException
    */
-  private static void entradaAlmacen() throws StockNegativoExceptions, CantidadNegativaExceptions {
+  private static void entradaAlmacen() {
     try {
       System.out.println("--INCREMENTAR STOCK--");
-      System.out.println("Introduce el codigo del articulo para incrementar su stock.");
-      int codigo = entrada.nextInt();
+      int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
       Articulo articulo = almacen.get(codigo);
       System.out.println(articulo);
 
-      System.out.println("Introduzca el número de artículos entregados al almacen.");
-      int cantidad = entrada.nextInt();
+      int cantidad = Teclado.leerEntero("Introduzca el número de artículos a aumentar del stock del almacen.");
       almacen.incrementar(codigo, cantidad);
     } catch (Exception e) {
       System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage()+"\n");
@@ -182,59 +174,20 @@ public class TestGestisimal {
   /**
    * Método para disminuir el stock de un artículo, este no puede ser negativo.
    * 
-   * @throws StockNegativoExceptions
-   * @throws CantidadNegativaExceptions
+   * @throws StockNegativoException
+   * @throws CantidadNegativaException
    */
   private static void salidaAlmacen() {
     try {
       System.out.println("--DECREMENTAR STOCK--");
-      System.out.println("Introduce el codigo del articulo para decrementar su stock.");
-      int codigo = entrada.nextInt();
+      int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
       Articulo articulo = almacen.get(codigo);
       System.out.println(articulo);
 
-      System.out.println("Introduzca el número de artículos eliminados del almacen.");
-      int cantidad = entrada.nextInt();
+      int cantidad = Teclado.leerEntero("Introduzca el número de artículos a eliminar del stock del almacen.");
       almacen.decrementar(codigo, cantidad);
     } catch (Exception e) {
       System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage()+"\n");
     }
-  }
-
-  /**
-   * Método que muestra el menú.
-   */
-  public static void mostrarMenu() {
-    System.out.println("----MENÚ GESTISIMAL----");
-    System.out.println("1º)Listado.");
-    System.out.println("2º)Alta.");
-    System.out.println("3º)Baja.");
-    System.out.println("4º)Modificación.");
-    System.out.println("5º)Entrada de mercancía.");
-    System.out.println("6º)Salida de mercancía.");
-    System.out.println("7º)Salir.");
-  }
-
-  /**
-   * Recoge la opción valida del menú
-   * @return 
-   */
-  public static int pedirOpcion() {
-    int opcion = 0;
-    try {
-      System.out.print("Introduzca una opción: \n");
-      opcion = entrada.nextInt();
-    } catch (Exception e) {
-      System.err.println("No ha introducido un número entero,inténtelo de nuevo.");
-      entrada.nextLine();
-    }
-    return opcion;
-  }
-  
-  /**
-   * Método para mostrar mensaje de despedida.
-   */
-  private static void salir() {
-    System.out.println("Saliendo de la gestión del almacen.");
   }
 }

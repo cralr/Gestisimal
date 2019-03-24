@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import gestisimal.almacen.exceptions.ArticuloNoExisteException;
 import gestisimal.almacen.exceptions.ArticuloYaExisteException;
-import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
-import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
-import gestisimal.almacen.exceptions.StockNegativoExceptions;
-import gestisimal.almacen.exceptions.precioCompraNegativoExceptions;
-import gestisimal.almacen.exceptions.precioVentaNegativoExceptions;
+import gestisimal.almacen.exceptions.CantidadNegativaException;
+import gestisimal.almacen.exceptions.CodigoNoValidoException;
+import gestisimal.almacen.exceptions.StockNegativoException;
+import gestisimal.almacen.exceptions.PrecioCompraNegativoException;
+import gestisimal.almacen.exceptions.PrecioVentaNegativoException;
 
 /**
  * Gestiona el conjunto de artículos del almacén.
@@ -47,7 +47,7 @@ public class Almacen {
    *          Código del artículo a eliminar
    * @return true si se ha eliminado. false en otro caso.
    */
-  public boolean baja(int codigo) throws CodigoNoValidoExceptions {
+  public boolean baja(int codigo) throws CodigoNoValidoException {
     return arraylist.remove(new Articulo(codigo)); // Si el código que introducimos en el test es igual al código del
                                                  // artículo que hay en la lista se realiza el borrado.
   }
@@ -60,13 +60,13 @@ public class Almacen {
    * @param precioCompra
    * @param precioVenta
    * @param stock
-   * @throws StockNegativoExceptions
-   * @throws precioVentaNegativoExceptions
-   * @throws precioCompraNegativoExceptions
+   * @throws StockNegativoException
+   * @throws PrecioVentaNegativoException
+   * @throws PrecioCompraNegativoException
    */
 
   public void set(Articulo articulo, String descripcion, double precioCompra, double precioVenta, int stock)
-      throws StockNegativoExceptions, precioCompraNegativoExceptions, precioVentaNegativoExceptions {
+      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException {
     int indice = arraylist.indexOf(articulo);
     articulo.set(descripcion, precioCompra, precioVenta, stock);
     arraylist.set(indice, arraylist.get(indice));
@@ -104,10 +104,10 @@ public class Almacen {
    * 
    * @param codigo
    * @param cantidad
-   * @throws CantidadNegativaExceptions
-   * @throws StockNegativoExceptions
+   * @throws CantidadNegativaException
+   * @throws StockNegativoException
    */
-  public void incrementar(int codigo, int cantidad) throws StockNegativoExceptions, CantidadNegativaExceptions {
+  public void incrementar(int codigo, int cantidad) throws StockNegativoException, CantidadNegativaException {
     Articulo articulo = arraylist.get(arraylist.indexOf(new Articulo(codigo))); 
     articulo.incrementaStock(cantidad);
   }
@@ -117,12 +117,12 @@ public class Almacen {
    * 
    * @param codigo
    * @param cantidad
-   * @throws CantidadNegativaExceptions
-   * @throws StockNegativoExceptions
+   * @throws CantidadNegativaException
+   * @throws StockNegativoException
    */
-  public void decrementar(int codigo, int cantidad) throws StockNegativoExceptions, CantidadNegativaExceptions {
+  public void decrementar(int codigo, int cantidad) throws StockNegativoException, CantidadNegativaException {
     Articulo articulo = arraylist.get(arraylist.indexOf(new Articulo(codigo)));
     articulo.decrementaStock(cantidad);
-
+    
   }
 }

@@ -1,11 +1,11 @@
 package gestisimal.almacen;
 
-import gestisimal.almacen.exceptions.CantidadNegativaExceptions;
-import gestisimal.almacen.exceptions.CodigoNoValidoExceptions;
-import gestisimal.almacen.exceptions.StockNegativoExceptions;
-import gestisimal.almacen.exceptions.precioCompraNegativoExceptions;
-import gestisimal.almacen.exceptions.precioVentaNegativoExceptions;
-import gestisimal.almacen.exceptions.StockNegativoExceptions;
+import gestisimal.almacen.exceptions.CantidadNegativaException;
+import gestisimal.almacen.exceptions.CodigoNoValidoException;
+import gestisimal.almacen.exceptions.StockNegativoException;
+import gestisimal.almacen.exceptions.PrecioCompraNegativoException;
+import gestisimal.almacen.exceptions.PrecioVentaNegativoException;
+import gestisimal.almacen.exceptions.StockNegativoException;
 
 /**
  * <p>
@@ -39,7 +39,7 @@ public class Articulo {
   /**
    * Generará códigos para los artículos
    */
-  private static int contador = 0;
+  private static int contador = 1;
   private String descripcion;
   private double precioCompra;
   private double precioVenta;
@@ -56,12 +56,12 @@ public class Articulo {
    * @param precioCompra
    * @param precioVenta
    * @param stock
-   * @throws StockNegativoExceptions
-   * @throws precioCompraNegativoExceptions
-   * @throws precioVentaNegativoExceptions
+   * @throws StockNegativoException
+   * @throws PrecioCompraNegativoException
+   * @throws PrecioVentaNegativoException
    */
   Articulo(String descripcion, double precioCompra, double precioVenta, int stock)
-      throws StockNegativoExceptions, precioCompraNegativoExceptions, precioVentaNegativoExceptions {
+      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException {
     setDescripcion(descripcion);
     setPrecioCompra(precioCompra);
     setPrecioVenta(precioVenta);
@@ -86,7 +86,7 @@ public class Articulo {
   }
 
   /**
-   * Setter del código
+   * Setter del código del constructor de articulo que usa unicamente el codigo.
    * 
    */
   private void setCodigo(int codigo) {
@@ -136,13 +136,13 @@ public class Articulo {
    * 
    * @param precioCompra
    *          the precioCompra to set
-   * @throws precioCompraNegativoExceptions
+   * @throws PrecioCompraNegativoException
    */
-  void setPrecioCompra(double precioCompra) throws precioCompraNegativoExceptions {
+  void setPrecioCompra(double precioCompra) throws PrecioCompraNegativoException {
     if (precioCompra >= 0) {
       this.precioCompra = precioCompra;
     } else
-      throw new precioCompraNegativoExceptions("El precio de compra no puede ser negativo.");
+        throw new PrecioCompraNegativoException("El precio de compra no puede ser negativo.");
   }
 
   /**
@@ -160,13 +160,13 @@ public class Articulo {
    * 
    * @param precioVenta
    *          the precioVenta to set
-   * @throws precioVentaNegativoExceptions
+   * @throws PrecioVentaNegativoException
    */
-  void setPrecioVenta(double precioVenta) throws precioVentaNegativoExceptions {
+  void setPrecioVenta(double precioVenta) throws PrecioVentaNegativoException {
     if (precioVenta >= 0) {
       this.precioVenta = precioVenta;
     } else
-      throw new precioVentaNegativoExceptions("El precio de venta no puede ser negativo.");
+        throw new PrecioVentaNegativoException("El precio de venta no puede ser negativo.");
 
   }
 
@@ -184,41 +184,41 @@ public class Articulo {
    * 
    * @param stock
    *          the stock to set
-   * @throws StockNegativoExceptions
+   * @throws StockNegativoException
    */
-  void setStock(int stock) throws StockNegativoExceptions {
+  void setStock(int stock) throws StockNegativoException {
     if (stock >= 0) {
       this.stock = stock;
     } else
-      throw new StockNegativoExceptions("El stock no puede ser negativo.");
+        throw new StockNegativoException("El stock no puede ser negativo.");
   }
 
   /**
    * Método para aumentar el stock
    * 
    * @param cantidad
-   * @throws StockNegativoExceptions
-   * @throws CantidadNegativaExceptions
+   * @throws StockNegativoException
+   * @throws CantidadNegativaException
    */
-  public void incrementaStock(int cantidad) throws StockNegativoExceptions, CantidadNegativaExceptions {
+  public void incrementaStock(int cantidad) throws StockNegativoException, CantidadNegativaException {
     if (cantidad > 0)
       setStock(getStock() + cantidad);
     else
-      throw new CantidadNegativaExceptions("No se puede añadir una cantidad de stock negativo.");
+      throw new CantidadNegativaException("No se puede añadir una cantidad de stock negativo.");
   }
 
   /**
    * Método para aumentar el stock
    * 
    * @param cantidad
-   * @throws CantidadNegativaExceptions
-   * @throws StockNegativoExceptions
+   * @throws CantidadNegativaException
+   * @throws StockNegativoException
    */
-  public void decrementaStock(int cantidad) throws CantidadNegativaExceptions, StockNegativoExceptions {
+  public void decrementaStock(int cantidad) throws CantidadNegativaException, StockNegativoException {
     if (cantidad > 0)
       setStock(getStock() - cantidad);
     else
-      throw new CantidadNegativaExceptions("No se puede añadir una cantidad de stock negativo.");
+      throw new CantidadNegativaException("No se puede añadir una cantidad de stock negativo.");
   }
 
   /*
@@ -271,12 +271,12 @@ public class Articulo {
    * @param precioCompra
    * @param precioVenta
    * @param stock
-   * @throws StockNegativoExceptions
-   * @throws precioCompraNegativoExceptions
-   * @throws precioVentaNegativoExceptions
+   * @throws StockNegativoException
+   * @throws PrecioCompraNegativoException
+   * @throws PrecioVentaNegativoException
    */
   public void set(String descripcion, double precioCompra, double precioVenta, int stock)
-      throws StockNegativoExceptions, precioCompraNegativoExceptions, precioVentaNegativoExceptions {
+      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException {
     setDescripcion(descripcion);
     setPrecioCompra(precioCompra);
     setPrecioVenta(precioVenta);
