@@ -4,16 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import gestisimal.almacen.Almacen;
-import gestisimal.almacen.Articulo;
-import gestisimal.almacen.exceptions.ArticuloNoExisteException;
-import gestisimal.almacen.exceptions.CantidadNegativaException;
-import gestisimal.almacen.exceptions.CodigoNoValidoException;
-import gestisimal.almacen.exceptions.StockNegativoException;
-import gestisimal.utiles.Menu;
-import gestisimal.utiles.Teclado;
-import gestisimal.almacen.exceptions.PrecioCompraNegativoException;
-import gestisimal.almacen.exceptions.PrecioVentaNegativoException;
+import gestisimal.almacen.*;
+import gestisimal.almacen.exceptions.*;
+import gestisimal.utiles.*;
+
 
 /**
  * Se comunica con el usuario (E/S de datos por consola) Comprueba si existe o
@@ -40,28 +34,28 @@ public class TestGestisimal {
     //almacenDePrueba();
     do {
       switch ((menu.gestionar())) {
-      case 1:
-        System.out.println(almacen.toString());
-        break;
-      case 2:
-        annadir();
-        break;
-      case 3:
-        baja();
-        break;
-      case 4:
-        modificar();
-        break;
-      case 5:
-        entradaAlmacen();
-        break;
-      case 6:
-        salidaAlmacen();
-        break;
-       default:
-         System.out.println("Adios");
-         return;
-      }
+        case 1:
+          System.out.println(almacen);
+          break;
+        case 2:
+          annadir();
+          break;
+        case 3:
+          baja();
+          break;
+        case 4:
+          modificar();
+          break;
+        case 5:
+          entradaAlmacen();
+          break;
+        case 6:
+          salidaAlmacen();
+          break;
+         default:
+           System.out.println("Gracias por usar Gestisimal.");
+           return;
+        }
     } while (true);
   }
 
@@ -99,7 +93,7 @@ public class TestGestisimal {
       System.out.println("Artículo añadido.");
     } catch (Exception e) {
       System.err.println("No se ha podido dar de alta al artículo. " + e.getMessage());// Si hay un error salta la
-                                                                                       // excepción.
+                                                                                    // excepción.
       entrada.nextLine();
     }
   }
@@ -110,10 +104,12 @@ public class TestGestisimal {
    * @throws CodigoNoValidoException
    * @throws IOException 
    * @throws NumberFormatException 
+   * @throws ArticuloNoExisteException 
    */
-  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException {
+  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException, ArticuloNoExisteException {
     int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
-
+    Articulo articulo = almacen.get(codigo);
+    System.out.println(articulo);
     if (almacen.baja(codigo))
       System.out.println("Artículo eliminado.");
     else

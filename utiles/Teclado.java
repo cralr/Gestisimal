@@ -8,6 +8,7 @@ import java.util.Scanner;
  * Permite lectura desde teclado
  * 
  * @author Francisco Javier Frías Serrano
+ * @author Rafale Miguel Cruz Álvarez
  * @version 1.0
  */
 public class Teclado {
@@ -24,7 +25,7 @@ public class Teclado {
 		char caracter;
 		try {
 			caracter = leerCadena().charAt(0);
-		} catch (InputMismatchException e) {
+		} catch (Exception e) {
 			caracter = 0;
 		}
 		return caracter;
@@ -67,7 +68,7 @@ public class Teclado {
 
 		try {
 			cadena = entrada.nextLine(); // Lee una linea de texto (hasta intro)
-		} catch (InputMismatchException e) {
+		} catch (Exception e) {
 			cadena = "";
 		}
 		return cadena;
@@ -84,8 +85,9 @@ public class Teclado {
 		int x;
 		try {
 			x = Integer.parseInt(leerCadena().trim()); 
-		} catch (InputMismatchException e) {
-			x = 0;
+		} catch (Exception e) {
+  			x = 0;
+  			System.err.println("Introduzca un entero.");
 		}
 		return x;
 	}
@@ -114,7 +116,7 @@ public class Teclado {
 		double x;
 		try {
 			x = Double.parseDouble(leerCadena().trim()); 
-		} catch (InputMismatchException e) {
+		} catch (Exception e) {
 			x = 0;
 		}
 		return x;

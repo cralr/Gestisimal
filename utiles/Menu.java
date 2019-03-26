@@ -12,6 +12,7 @@ import java.io.IOException;
  * </ul>
  * 
  * @author Francisco Javier Frías Serrano
+ * @author Rafael Miguel Cruz Álvarez
  * @version 1.0
  */
 public class Menu {
@@ -64,10 +65,10 @@ public class Menu {
 	 */
 	private int recogerOpcion() throws NumberFormatException, IOException {
 		int opcion;
-		do {
-			opcion = Teclado.leerEntero();
-		} while (opcion < 1 || opcion > numOpciones);
-		return opcion;
-	}
-
+  		do {
+  			opcion = Teclado.leerEntero();
+  		} while (opcion < 1 || opcion > numOpciones);
+  		return opcion;
+  	}
 }
+
