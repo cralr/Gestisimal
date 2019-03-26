@@ -93,7 +93,6 @@ public class TestGestisimal {
       System.out.println("Artículo añadido.");
     } catch (Exception e) {
       System.err.println("No se ha podido dar de alta al artículo. " + e.getMessage());// Si hay un error salta la
-                                                                                    // excepción.
       entrada.nextLine();
     }
   }
@@ -104,9 +103,10 @@ public class TestGestisimal {
    * @throws CodigoNoValidoException
    * @throws IOException 
    * @throws NumberFormatException 
+   * @throws NoEsEnteroException 
    * @throws ArticuloNoExisteException 
    */
-  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException {
+  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException, NoEsEnteroException {
     int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
     if (almacen.baja(codigo))
       System.out.println("Artículo eliminado.");
@@ -123,9 +123,11 @@ public class TestGestisimal {
    * @throws PrecioVentaNegativoException
    * @throws IOException 
    * @throws NumberFormatException 
+   * @throws NoEsEnteroException 
+   * @throws NoEsDecimalException 
    */
   private static void modificar()
-      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException, NumberFormatException, IOException {
+      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException, NumberFormatException, IOException, NoEsEnteroException, NoEsDecimalException {
 
     try {
       System.out.println("--MODIFICAR ARTÍCULO--");
@@ -140,19 +142,23 @@ public class TestGestisimal {
 
 
       almacen.set(articulo, descripcion, precioCompra, precioVenta, stock);
-    } catch (ArticuloNoExisteException e) {
+    } catch (ArticuloNoExisteException  | PrecioCompraNegativoException | PrecioVentaNegativoException | StockNegativoException | NoEsDecimalException | NoEsEnteroException e  ) {
       System.err.println("No se ha podido modificar el artículo." + e.getMessage());
+      entrada.nextLine();
     }
 
   }
 
   /**
    * Método para aumentar el stock de un artículo.
+   * @throws NoEsEnteroException 
+   * @throws IOException 
+   * @throws NumberFormatException 
    * 
    * @throws StockNegativoException
    * @throws CantidadNegativaException
    */
-  private static void entradaAlmacen() {
+  private static void entradaAlmacen() throws NumberFormatException, IOException, NoEsEnteroException, StockNegativoException {
     try {
       System.out.println("--INCREMENTAR STOCK--");
       int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
@@ -161,18 +167,21 @@ public class TestGestisimal {
 
       int cantidad = Teclado.leerEntero("Introduzca el número de artículos a aumentar del stock del almacen.");
       almacen.incrementar(codigo, cantidad);
-    } catch (Exception e) {
-      System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage()+"\n");
+    } catch (ArticuloNoExisteException | CantidadNegativaException e) {
+      System.err.println("No se ha podido incrementar el stock del artículo." + e.getMessage()+"\n");
     }
   }
 
   /**
    * Método para disminuir el stock de un artículo, este no puede ser negativo.
+   * @throws NoEsEnteroException 
+   * @throws IOException 
+   * @throws NumberFormatException 
    * 
    * @throws StockNegativoException
    * @throws CantidadNegativaException
    */
-  private static void salidaAlmacen() {
+  private static void salidaAlmacen() throws NumberFormatException, IOException, NoEsEnteroException, CantidadNegativaException {
     try {
       System.out.println("--DECREMENTAR STOCK--");
       int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
@@ -181,7 +190,7 @@ public class TestGestisimal {
 
       int cantidad = Teclado.leerEntero("Introduzca el número de artículos a eliminar del stock del almacen.");
       almacen.decrementar(codigo, cantidad);
-    } catch (Exception e) {
+    } catch (ArticuloNoExisteException |StockNegativoException | CantidadNegativaException e ) {
       System.err.println("No se ha podido decrementar el stock del artículo." + e.getMessage()+"\n");
     }
   }

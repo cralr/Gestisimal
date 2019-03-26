@@ -2,6 +2,8 @@ package gestisimal.utiles;
 
 import java.io.IOException;
 
+import gestisimal.almacen.exceptions.NoEsEnteroException;
+
 /**
  * <p>
  * Clase utilizada para la gestión de un menu. Se dedica a:
@@ -38,8 +40,9 @@ public class Menu {
 	 * @return opcion valida del menu
 	 * @throws IOException
 	 * @throws NumberFormatException
+	 * @throws NoEsEnteroException 
 	 */
-	public int gestionar() throws NumberFormatException, IOException {
+	public int gestionar() throws NumberFormatException, IOException, NoEsEnteroException {
 		mostrar();
 		return recogerOpcion();
 	}
@@ -62,8 +65,9 @@ public class Menu {
 	 * @return opcion valida
 	 * @throws IOException
 	 * @throws NumberFormatException
+	 * @throws NoEsEnteroException 
 	 */
-	private int recogerOpcion() throws NumberFormatException, IOException {
+	private int recogerOpcion() throws NumberFormatException, IOException, NoEsEnteroException {
 		int opcion;
   		do {
   			opcion = Teclado.leerEntero();

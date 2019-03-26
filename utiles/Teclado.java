@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import gestisimal.almacen.exceptions.NoEsDecimalException;
+import gestisimal.almacen.exceptions.NoEsEnteroException;
+
 /**
  * Permite lectura desde teclado
  * 
@@ -80,14 +83,15 @@ public class Teclado {
 	 * @return entero introducido por el usuario
 	 * @throws IOException
 	 * @throws NumberFormatException
+	 * @throws NoEsEnteroException 
 	 */
-	public static int leerEntero() throws NumberFormatException, IOException {
+	public static int leerEntero() throws NumberFormatException, IOException, NoEsEnteroException {
 		int x;
 		try {
 			x = Integer.parseInt(leerCadena().trim()); 
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
   			x = 0;
-  			System.err.println("Introduzca un entero.");
+  			throw new NoEsEnteroException("Introduzca un número entero.");
 		}
 		return x;
 	}
@@ -99,8 +103,9 @@ public class Teclado {
 	 * @return entero introducida por el usuario
 	 * @throws IOException
 	 * @throws NumberFormatException
+	 * @throws NoEsEnteroException 
 	 */
-	public static int leerEntero(String mensaje) throws NumberFormatException, IOException {
+	public static int leerEntero(String mensaje) throws NumberFormatException, IOException, NoEsEnteroException {
 		System.out.println(mensaje);
 		return leerEntero();
 	}
@@ -111,13 +116,16 @@ public class Teclado {
 	 * @return decimal introducido por el usuario
 	 * @throws IOException
 	 * @throws NumberFormatException
+	 * @throws NoEsDecimalException 
 	 */
-	public static double leerDecimal() throws NumberFormatException, IOException {
+	public static double leerDecimal() throws NumberFormatException, IOException, NoEsDecimalException {
 		double x;
 		try {
 			x = Double.parseDouble(leerCadena().trim()); 
 		} catch (Exception e) {
 			x = 0;
+      throw new NoEsDecimalException("Introduzca un número decimal.");
+
 		}
 		return x;
 	}
@@ -129,8 +137,9 @@ public class Teclado {
 	 * @return decimal introducida por el usuario
 	 * @throws IOException
 	 * @throws NumberFormatException
+	 * @throws NoEsDecimalException 
 	 */
-	public static double leerDecimal(String mensaje) throws NumberFormatException, IOException {
+	public static double leerDecimal(String mensaje) throws NumberFormatException, IOException, NoEsDecimalException {
 		System.out.println(mensaje);
 		return leerDecimal();
 	}
