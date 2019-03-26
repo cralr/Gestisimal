@@ -18,7 +18,7 @@ import java.io.IOException;
 public class Menu {
 	String titulo = null;
 	String opciones[] = null;
-	int numOpciones = 2;
+	int numOpciones = 0;
 
 	/**
 	 * 

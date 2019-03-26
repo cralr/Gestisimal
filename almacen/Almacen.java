@@ -2,13 +2,7 @@ package gestisimal.almacen;
 
 import java.util.ArrayList;
 
-import gestisimal.almacen.exceptions.ArticuloNoExisteException;
-import gestisimal.almacen.exceptions.ArticuloYaExisteException;
-import gestisimal.almacen.exceptions.CantidadNegativaException;
-import gestisimal.almacen.exceptions.CodigoNoValidoException;
-import gestisimal.almacen.exceptions.StockNegativoException;
-import gestisimal.almacen.exceptions.PrecioCompraNegativoException;
-import gestisimal.almacen.exceptions.PrecioVentaNegativoException;
+import gestisimal.almacen.exceptions.*;
 
 /**
  * Gestiona el conjunto de artículos del almacén.

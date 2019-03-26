@@ -106,14 +106,13 @@ public class TestGestisimal {
    * @throws NumberFormatException 
    * @throws ArticuloNoExisteException 
    */
-  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException, ArticuloNoExisteException {
+  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException {
     int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
-    Articulo articulo = almacen.get(codigo);
-    System.out.println(articulo);
     if (almacen.baja(codigo))
       System.out.println("Artículo eliminado.");
     else
       System.err.println("El artículo no se ha podido eliminar. No existe un artículo con ese código en el almacen.");
+      entrada.nextLine();
   }
 
   /**
