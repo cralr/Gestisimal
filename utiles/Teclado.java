@@ -24,10 +24,10 @@ public class Teclado {
 	 * @return carácter introducido por el usuario
 	 * @throws IOException
 	 */
-	public static char leerCaracter() throws IOException {
+	public static char leerCaracter()  {
 		char caracter;
 		try {
-			caracter = leerCadena().charAt(0);
+			return leerCadena().charAt(0);
 		} catch (Exception e) {
 			caracter = 0;
 		}
@@ -41,7 +41,7 @@ public class Teclado {
 	 * @return carácter introducido por el usuario
 	 * @throws IOException
 	 */
-	public static char leerCaracter(String mensaje) throws IOException {
+	public static char leerCaracter(String mensaje)  {
 		System.out.println(mensaje);
 		return leerCaracter();
 	}
@@ -53,7 +53,7 @@ public class Teclado {
 	 * @return cadena introducida por el usuario
 	 * @throws IOException
 	 */
-	public static String leerCadena(String mensaje) throws IOException {
+	public static String leerCadena(String mensaje) {
 		System.out.println(mensaje);
 		return leerCadena();
 	}
@@ -62,38 +62,28 @@ public class Teclado {
 	 * Lee una cadena del teclado
 	 * 
 	 * @return cadena introducida por el usuario
-	 * @throws IOException
+	 * 
 	 */
 
-	public static String leerCadena() throws IOException {
+	public static String leerCadena() {
+	  return entrada.nextLine();
 
-		String cadena;
-
-		try {
-			cadena = entrada.nextLine(); // Lee una linea de texto (hasta intro)
-		} catch (Exception e) {
-			cadena = "";
-		}
-		return cadena;
 	}
 
 	/**
 	 * Lee un entero del teclado
 	 * 
 	 * @return entero introducido por el usuario
-	 * @throws IOException
-	 * @throws NumberFormatException
+
 	 * @throws NoEsEnteroException 
 	 */
-	public static int leerEntero() throws NumberFormatException, IOException, NoEsEnteroException {
-		int x;
+	public static int leerEntero() throws NoEsEnteroException {
+	
 		try {
-			x = Integer.parseInt(leerCadena().trim()); 
+			return Integer.parseInt(leerCadena().trim()); 
 		} catch (NumberFormatException e) {
-  			x = 0;
   			throw new NoEsEnteroException("Introduzca un número entero.");
 		}
-		return x;
 	}
 
 	/**
@@ -101,11 +91,10 @@ public class Teclado {
 	 * 
 	 * @param mensaje mensaje mostrado al usuario
 	 * @return entero introducida por el usuario
-	 * @throws IOException
-	 * @throws NumberFormatException
+
 	 * @throws NoEsEnteroException 
 	 */
-	public static int leerEntero(String mensaje) throws NumberFormatException, IOException, NoEsEnteroException {
+	public static int leerEntero(String mensaje) throws NoEsEnteroException {
 		System.out.println(mensaje);
 		return leerEntero();
 	}
@@ -114,20 +103,15 @@ public class Teclado {
 	 * Lee un decimal del teclado
 	 * 
 	 * @return decimal introducido por el usuario
-	 * @throws IOException
-	 * @throws NumberFormatException
+	
 	 * @throws NoEsDecimalException 
 	 */
-	public static double leerDecimal() throws NumberFormatException, IOException, NoEsDecimalException {
-		double x;
+	public static double leerDecimal() throws NoEsDecimalException {
 		try {
-			x = Double.parseDouble(leerCadena().trim()); 
-		} catch (Exception e) {
-			x = 0;
+			return Double.parseDouble(leerCadena().trim()); 
+		} catch (NumberFormatException e) {
       throw new NoEsDecimalException("Introduzca un número decimal.");
-
-		}
-		return x;
+    }
 	}
 
 	/**
@@ -139,7 +123,7 @@ public class Teclado {
 	 * @throws NumberFormatException
 	 * @throws NoEsDecimalException 
 	 */
-	public static double leerDecimal(String mensaje) throws NumberFormatException, IOException, NoEsDecimalException {
+	public static double leerDecimal(String mensaje) throws NoEsDecimalException {
 		System.out.println(mensaje);
 		return leerDecimal();
 	}

@@ -106,7 +106,7 @@ public class TestGestisimal {
    * @throws NoEsEnteroException 
    * @throws ArticuloNoExisteException 
    */
-  private static void baja() throws CodigoNoValidoException, NumberFormatException, IOException, NoEsEnteroException {
+  private static void baja() throws CodigoNoValidoException, NoEsEnteroException {
     int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
     if (almacen.baja(codigo))
       System.out.println("Artículo eliminado.");
@@ -127,7 +127,7 @@ public class TestGestisimal {
    * @throws NoEsDecimalException 
    */
   private static void modificar()
-      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException, NumberFormatException, IOException, NoEsEnteroException, NoEsDecimalException {
+      throws StockNegativoException, PrecioCompraNegativoException, PrecioVentaNegativoException,NoEsEnteroException, NoEsDecimalException {
 
     try {
       System.out.println("--MODIFICAR ARTÍCULO--");
@@ -158,7 +158,7 @@ public class TestGestisimal {
    * @throws StockNegativoException
    * @throws CantidadNegativaException
    */
-  private static void entradaAlmacen() throws NumberFormatException, IOException, NoEsEnteroException, StockNegativoException {
+  private static void entradaAlmacen() throws NoEsEnteroException, StockNegativoException {
     try {
       System.out.println("--INCREMENTAR STOCK--");
       int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
@@ -181,7 +181,7 @@ public class TestGestisimal {
    * @throws StockNegativoException
    * @throws CantidadNegativaException
    */
-  private static void salidaAlmacen() throws NumberFormatException, IOException, NoEsEnteroException, CantidadNegativaException {
+  private static void salidaAlmacen() throws NoEsEnteroException, CantidadNegativaException {
     try {
       System.out.println("--DECREMENTAR STOCK--");
       int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
