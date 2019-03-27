@@ -62,8 +62,6 @@ public class Menu {
 	 * Recoge la opcion valida del menu
 	 * 
 	 * @return opcion valida
-	 * @throws IOException
-	 * @throws NumberFormatException
 	 * @throws NoEsEnteroException 
 	 */
 	private int recogerOpcion() {

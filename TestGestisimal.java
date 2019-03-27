@@ -101,18 +101,19 @@ public class TestGestisimal {
    * Método para dar de baja un artículo de la lista.
    * 
    * @throws CodigoNoValidoException
-   * @throws IOException 
-   * @throws NumberFormatException 
    * @throws NoEsEnteroException 
    * @throws ArticuloNoExisteException 
    */
   private static void baja() throws CodigoNoValidoException, NoEsEnteroException {
-    int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
-    if (almacen.baja(codigo))
-      System.out.println("Artículo eliminado.");
-    else
-      System.err.println("El artículo no se ha podido eliminar. No existe un artículo con ese código en el almacen.");
-      entrada.nextLine();
+    try {
+      int codigo= Teclado.leerEntero("Introduce el códido del artículo a eliminar.");
+      if (almacen.baja(codigo))
+        System.out.println("Artículo eliminado.");
+      else
+        System.err.println("El artículo no se ha podido eliminar. No existe un artículo con ese código en el almacen.");
+    }catch(NoEsEnteroException n) {
+      System.err.println(n.getMessage());
+    }
   }
 
   /**
@@ -121,8 +122,6 @@ public class TestGestisimal {
    * @throws StockNegativoException
    * @throws PrecioCompraNegativoException
    * @throws PrecioVentaNegativoException
-   * @throws IOException 
-   * @throws NumberFormatException 
    * @throws NoEsEnteroException 
    * @throws NoEsDecimalException 
    */
@@ -152,9 +151,6 @@ public class TestGestisimal {
   /**
    * Método para aumentar el stock de un artículo.
    * @throws NoEsEnteroException 
-   * @throws IOException 
-   * @throws NumberFormatException 
-   * 
    * @throws StockNegativoException
    * @throws CantidadNegativaException
    */
@@ -175,9 +171,6 @@ public class TestGestisimal {
   /**
    * Método para disminuir el stock de un artículo, este no puede ser negativo.
    * @throws NoEsEnteroException 
-   * @throws IOException 
-   * @throws NumberFormatException 
-   * 
    * @throws StockNegativoException
    * @throws CantidadNegativaException
    */
